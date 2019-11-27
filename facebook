@@ -1,0 +1,31 @@
+from selenium import webdriver
+from bs4 import BeautifulSoup
+from selenium.webdriver.chrome.options import Options
+option = Options()
+
+option.add_argument("--disable-infobars")
+option.add_argument("start-maximized")
+option.add_argument("--disable-extensions")
+
+# Pass the argument 1 to allow and 2 to block
+option.add_experimental_option("prefs", {
+"profile.default_content_setting_values.notifications": 1
+})
+
+driver = webdriver.Chrome(chrome_options=option, executable_path=r'C:\Users\Coding Lab\Downloads\chromedriver_win32\chromedriver')
+driver.implicitly_wait(6)
+url = "https://www.facebook.com/"
+driver.get(url)
+driver.implicitly_wait(6)
+
+id = ""
+pw = ""
+
+driver.find_element_by_name('email').send_keys(id)
+driver.find_element_by_name('pass').send_keys(pw)
+try:
+    driver.find_element_by_xpath('//*[@id="loginbutton"]').click()
+except:
+    driver.find_element_by_xpath('//*[@id="u_0_a"]/div[2]/button').click()
+driver.implicitly_wait(6)
+driver.find_element_by_name('xhpc_message').click()
